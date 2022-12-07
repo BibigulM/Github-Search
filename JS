@@ -1,0 +1,68 @@
+import { LightningElement } from 'lwc';
+const GITHUB_URL='https://api.github.com/users/'
+import {ShowToastEvent} from 'lightning/platformShowToastEvent'
+
+export default class GithubApi extends LightningElement {
+    username 
+
+    userObj
+
+    onChangeHandler(event){
+        this.username=event.target.value
+    }
+
+    get fullURL(){
+        return GITHUB_URL + this.username
+    }
+    searchHandler(event){
+        if (this.username != null && this.username.length > 0){
+            fetch(this.fullURL)
+            .then(response =>{
+               // console.log(response)
+                if (response.ok){
+                    return response.json()
+                }
+                throw Error (response)
+            })
+
+            .then(userInfo =>{
+
+                this.userObj ={
+                    followers:userInfo.followers,
+                    following:userInfo.following,
+                    avatar_url:userInfo.avatar_url,
+                    name:userInfo.name,
+                    id:userInfo.id,
+                    email:userInfo.email,
+                    blog:userInfo.blog,
+                    location:userInfo.location,
+            
+            
+            }
+
+
+
+
+                console.log('The data is coming', userInfo)
+                const event=new ShowToastEvent({
+                    title: 'Successfully retrieved the user',
+                    message: 'The user ${userInfo.login}',
+                    variant: 'success'
+                })
+                this.dispatchEvent(event)
+            })
+
+            .catch((error)=>{
+                const event = new ShowToastEvent({
+                    title:'The user does not exist',
+                    message: error,
+                    variant: 'error'
+                })
+                this.dispatchEvent(event)
+            })
+
+    } else {
+        console.log ('User name cannot be empty')
+    }
+    }
+}
