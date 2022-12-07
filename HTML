@@ -1,0 +1,61 @@
+<template>
+    <lightning-card  icon-name="action:user"  title="Github Search">
+        <div onkeyup={handleKeyUp}>
+            <lightning-input
+                label="Username: "
+                type="search"
+                class="slds-m-around_medium"
+                onchange={onChangeHandler}
+            ></lightning-input>
+        </div>
+        <div>
+            <lightning-button 
+            variant="brand" 
+            label="search" 
+            onclick={searchHandler}
+            class="slds-m-around_medium"></lightning-button>  
+        </div>
+        <template if:true={userObj}>
+            <div class="slds-var-m-around_medium">
+                <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+                    <lightning-layout>
+                        <lightning-layout-item padding="around-small">
+                            
+                            <div  class="custom-box  slds-p-around_medium slds-text-heading_large slds-text-align_center"> <lightning-icon icon-name='standard:messaging_user' alternative-text='messaging_user' size='large' title='messaging_user'></lightning-icon> Follower: {userObj.followers}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <div class="custom-box  slds-text-heading_large slds-p-around_medium slds-text-align_center"> <lightning-icon icon-name='standard:user_role' alternative-text='user_role' size='large' title='user_role'></lightning-icon> Following: {userObj.following}</div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <img style="border-radius: 50%" class="slds-align_absolute-center"  src={userObj.avatar_url} alt="Photo">
+                
+                <div class="slds-text-heading_large  slds-var-m-around_large slds-align_absolute-center">{userObj.name}</div>
+               
+                <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-p-around_large slds-m-horizontal_none">
+                    <lightning-layout>
+                        <lightning-layout-item padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">ID: {userObj.id}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">Email: {userObj.email}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center"> Blog: {userObj.blog}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">Location: {userObj.location}</div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            
+
+            
+
+             </div>
+        </template>
+        
+    </lightning-card>
+   
+   
+</template>
